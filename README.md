@@ -7,10 +7,11 @@ This project uses the [openai/gym](https://github.com/openai/gym) toolkit to bui
 
 #### To Run:
 1. ensure that the following python libraries are installed:
-[openai/gym](https://github.com/openai/gym)
-[numpy](https://github.com/numpy/numpy)
-[matplotlib](https://github.com/matplotlib/matplotlib)
-[pandas](https://github.com/pandas-dev/pandas)
+
+   [openai/gym](https://github.com/openai/gym)  
+   [numpy](https://github.com/numpy/numpy)  
+   [matplotlib](https://github.com/matplotlib/matplotlib)  
+   [pandas](https://github.com/pandas-dev/pandas)
 
 2. In the repository folder, run the following:
 ```
