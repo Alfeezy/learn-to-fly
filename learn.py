@@ -68,6 +68,7 @@ def qLearning(env, num_episodes, discount_factor = 0.6,
 		
 		# Reset the environment and pick the first action 
 		state = env.reset() 
+		count = 0
 		
 		for t in itertools.count(): 
 			
@@ -95,15 +96,21 @@ def qLearning(env, num_episodes, discount_factor = 0.6,
 
 			# done is True if episode terminated 
 			if done: 
+				count += 1
+
+			# reaches done state 10 times
+			if count > 5:
+				break
+
+			# won't go forever
+			if t > 1000:
 				break
 				
 			state = next_state
-		
-		
-	
+
 	return Q, stats
 
-Q, stats = qLearning(env, 2000, alpha=a, discount_factor=d, epsilon=e) 
+Q, stats = qLearning(env, 1000, alpha=a, discount_factor=d, epsilon=e) 
 
 plotting.plot_episode_stats(stats, a, d, e) 
 

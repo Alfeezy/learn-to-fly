@@ -16,9 +16,9 @@ def plot_episode_stats(stats, alpha, discount, e, smoothing_window=10, noshow=Fa
     plt.title("Episode Rewards over Time; alpha = " + str(alpha) + ", discount factor = " + str(discount) + ", epsilon = " + str(e))
     if noshow:
         plt.close(fig1)
-        plt.savefig("Reward_vs_time.png")
+        plt.savefig(r"/Graphs/First Reward/a:" + str(alpha) + "df:" + str(discount) + "e:" + str(e))
     else:
         plt.show(fig1)
-        plt.savefig("Reward_vs_time.png")
+        plt.savefig(r"/Graphs/First Reward/a:" + str(alpha) + "df:" + str(discount) + "e:" + str(e))
 
     return fig1

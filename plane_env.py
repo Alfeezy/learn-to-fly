@@ -15,7 +15,7 @@ class PlaneEnv(discrete.DiscreteEnv):
         new_position += np.array([0, new_position[0]])
         new_position = self._limit_coordinates(new_position).astype(int)
         new_state = np.ravel_multi_index(tuple(new_position), self.shape)
-        is_done = tuple(new_position) == (0, self.goal_altitude)
+        is_done = new_position[1] == self.goal_altitude
         return [(1.0, new_state, -1.0, is_done)]
 
     def _limit_coordinates(self, coord):
@@ -27,8 +27,8 @@ class PlaneEnv(discrete.DiscreteEnv):
 
     def __init__(self):
         self.min_altitude = 0
-        self.max_altitude = 20
-        self.goal_altitude = 10
+        self.max_altitude = 50
+        self.goal_altitude = 25
         self.max_pitch = 4
         self.gravity = 1
 
@@ -56,7 +56,7 @@ class PlaneEnv(discrete.DiscreteEnv):
 
         # random start location
         isd = np.zeros(nS)
-        isd[np.ravel_multi_index((np.random.randint(0, self.max_pitch * 2), np.random.randint(5, 15)), self.shape)] = 1.0
+        isd[np.ravel_multi_index((np.random.randint(0, self.max_pitch * 2), np.random.randint(self.min_altitude, self.max_altitude)), self.shape)] = 1.0
 
         # calls DiscreteEnv
         super(PlaneEnv, self).__init__(nS, nA, P, isd)
