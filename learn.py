@@ -7,12 +7,15 @@ import pandas as pd
 
 from collections import defaultdict
 from plane_env import PlaneEnv
+from windy_gridworld import WindyGridworldEnv
 import plotting
 
 matplotlib.style.use('ggplot')
 
-
 env = PlaneEnv()
+a = 0.1
+d = 0.6
+e = 0.1
 
 
 def createEpsilonGreedyPolicy(Q, epsilon, num_actions): 
@@ -31,14 +34,14 @@ def createEpsilonGreedyPolicy(Q, epsilon, num_actions):
 				dtype = float) * epsilon / num_actions 
 				
 		best_action = np.argmax(Q[state]) 
-		Action_probabilities[best_action] += (1.0 - epsilon) 
+		Action_probabilities[best_action] += (1.0 - epsilon)
 		return Action_probabilities 
 
 	return policyFunction 
 
 
-def qLearning(env, num_episodes, discount_factor = 1.0, 
-							alpha = 0.6, epsilon = 0.1): 
+def qLearning(env, num_episodes, discount_factor = 0.6, 
+							alpha = 0.1, epsilon = 0.1): 
 	""" 
 	Q-Learning algorithm: Off-policy TD control. 
 	Finds the optimal greedy policy while improving 
@@ -57,6 +60,8 @@ def qLearning(env, num_episodes, discount_factor = 1.0,
 	# Create an epsilon greedy policy function 
 	# appropriately for environment action space 
 	policy = createEpsilonGreedyPolicy(Q, epsilon, env.action_space.n) 
+
+	print(env.observation_space)
 	
 	# For every episode 
 	for ith_episode in range(num_episodes): 
@@ -67,7 +72,7 @@ def qLearning(env, num_episodes, discount_factor = 1.0,
 		for t in itertools.count(): 
 			
 			# get probabilities of all actions from current state 
-			action_probabilities = policy(state) 
+			action_probabilities = policy(state)
 
 			# choose action according to 
 			# the probability distribution 
@@ -92,11 +97,13 @@ def qLearning(env, num_episodes, discount_factor = 1.0,
 			if done: 
 				break
 				
-			state = next_state 
+			state = next_state
+		
+		
 	
 	return Q, stats
 
-Q, stats = qLearning(env, 1000) 
+Q, stats = qLearning(env, 2000, alpha=a, discount_factor=d, epsilon=e) 
 
-plotting.plot_episode_stats(stats) 
+plotting.plot_episode_stats(stats, a, d, e) 
 
